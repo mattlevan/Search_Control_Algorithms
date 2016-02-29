@@ -16,17 +16,17 @@ class Game(metaclass=ABCMeta):
         self.goal = goal
 
 class EightPuzzle(Game):
-    tiles = [0, 1, 2, 3, 4, 5, 6, 7, 8] # List of all tile values.
+    tiles = set([0, 1, 2, 3, 4, 5, 6, 7, 8] # List of all tile values.
     start = {} # States in this game are dictionaries.
-    goal = {0: [2, 4, 6, 8], # The goal dictionary.
-            1: [2, 8],
-            2: [0, 1, 3],
-            3: [2, 4],
-            4: [0, 3, 5],
-            5: [4, 6],
-            6: [0, 5, 7],
-            7: [6, 8],
-            8: [0, 1, 7]}
+    goal = {0: set([2, 4, 6, 8]), # The goal dictionary.
+            1: set([2, 8]),
+            2: set([0, 1, 3]),
+            3: set([2, 4]),
+            4: set([0, 3, 5]),
+            5: set([4, 6]),
+            6: set([0, 5, 7]),
+            7: set([6, 8]),
+            8: set([0, 1, 7])}
 
     random.shuffle(tiles) # Shuffle tiles to generate random start state.
 
