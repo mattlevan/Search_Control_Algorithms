@@ -50,18 +50,8 @@ class BreadthFirst:
 				tempGraph, goalFound = self.searchKeys(graph)
 				# Update graph with the new moves stored in tempGraph.
 				graph.update(tempGraph)
-				print('updating dictionary')
-				print('Size of dictionary', len(graph))
-				
 				maxMoveCounter += 1
-		print('Verify all keys found: ')
-		for key in graph:
-			for vertex in graph[key]:
-				if vertex not in graph:
-					print('Key ', vertex, ' not found')	
-				else:
-					print('Key ', vertex, ' found')
-		print('goalFound: ', goalFound)
+
 		return self.game, graph	
 
 
@@ -86,20 +76,16 @@ class BreadthFirst:
 				if vertex not in searchGraph:
 					# If the goal isn't reached, add new states.
 					if not goalFound:
-						# Generate child states and add to the dictionary.
+						# Generate child states and add to the graph.
 						movestart, newstates = self.game.gen_moves(vertex)
 						tempDict.update({movestart: set(newstates)})
-						print('Tempdict size: ', len(tempDict))
 					# If the goal was reached previously.
 					else: 
 						# Set all child states as an empty set
-						print('vertex capped as set(): ', vertex)
 						tempDict.update({vertex: set()})
 				# Compare the present vertex to the goal state.
 				elif vertex in self.goals:
-				#	print('goal found!')
 					goalFound = True
-		print('Start state: ', self.game.start)
 		return tempDict, goalFound
 
 
@@ -124,17 +110,13 @@ class BreadthFirst:
 			# For each child of a vertex/key compare to the states seen.
 			# The subtraction leaves only unvisited paths in each key.
 			cnt = 0
-#			print('Iteration: ', qcnt, ' Printing key:')
 			for next in legalGraph[vertex] - set(path):
 				cnt += 1
-#				print(cnt, ' Next: ', next, '\n   Goal: ', goalState, ' equal?', next == goalState)
 				# If already visited state, skip to next child state.
 				if next in goalState:
-#					print('Goal found, path+[next]:\n', path+[next])
 					yield path + [next]
 				else:
 					queue.append((next, path + [next]))	
-#					print('appending', next)
 
 
 	'''
@@ -152,16 +134,16 @@ class BreadthFirst:
 	All games and output format are run below.
 '''
 
-f = open("SearchResults.txt", 'a')
+f = open("SearchResults.txt", 'w')
 eightGame = EightPuzzle()
 bfsearch = BreadthFirst(eightGame)
 eightSolutions = (bfsearch.shortestPath())
 strSolutions = str(eightSolutions)
 f.write(('Path to success: ' + str(strSolutions)))
-for i in eightSolutions:
-	f.write(('\n' + str(i) + '\n'))
+moveCount = 0
 for state in eightSolutions:
-        f.write(str(('\nMove#\n', state[0:3], '\n', state[3:6], '\n', state[6:9])))
+	moveCount += 1
+	f.write(('\nMove '+str(moveCount)+'\n'+str(state[0:3])+'\n' + str(state[3:6])+'\n'+str(state[6:9])))
 
 missionGame = MissionaryCannibal()
 bfSearchMission = BreadthFirst(missionGame)
