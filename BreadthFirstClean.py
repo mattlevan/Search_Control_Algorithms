@@ -135,30 +135,35 @@ class BreadthFirst:
 '''
 
 f = open("SearchResults.txt", 'w')
+# Run the Eightpuzzle
 eightGame = EightPuzzle()
 bfsearch = BreadthFirst(eightGame)
 eightSolutions = (bfsearch.shortestPath())
 strSolutions = str(eightSolutions)
-f.write(('Path to success: ' + str(strSolutions)))
+f.write(('EightPuzzle path to success \nStart:'))
 moveCount = 0
 for state in eightSolutions:
-	moveCount += 1
 	f.write(('\nMove '+str(moveCount)+'\n'+str(state[0:3])+'\n' + str(state[3:6])+'\n'+str(state[6:9])))
+	moveCount += 1
 
 missionGame = MissionaryCannibal()
 bfSearchMission = BreadthFirst(missionGame)
 missionSolutions = (bfSearchMission.shortestPath())
-f.write(('\nMissionary Path to success: ' + str(missionSolutions)))
-#for i in range(len(missionSolutions)):
-#        f.write(('\nMove#',i, missionSolutions[i], ':\n', missionSolutions[i][0:3], '\n', missionSolutions[i][3:6], '\n', missionSolutions[i][6:9]))
+f.write(('\n\nMissionary Path to success \nStart:'))
+moveCount = 0
+for state in missionSolutions:
+	f.write(('\nMove '+str(moveCount)+str(state)))
+	moveCount += 1
 
 tileGame = SlidingTiles()
 bfSearchTiles = BreadthFirst(tileGame)
 tileSolutions = (bfSearchTiles.shortestPath())
-f.write(('\nSliding Tiles Path to success: ' + str(tileSolutions)))
-#for i in range(len(missionSolutions)):
-#        f.write(('\nMove#',i, missionSolutions[i], ':\n', missionSolutions[i][0:3], '\n', missionSolutions[i][3:6], '\n', missionSolutions[i][6:9]))
-
+f.write(('\n\nSliding Tiles Path to success \nStart:'))
+moveCount = 0
+for state in tileSolutions:
+	f.write(('\nMove '+str(moveCount)+str(state)))
+	moveCount += 1
+# Close output file
 f.close()
 
 
