@@ -35,8 +35,6 @@ class SlidingTiles():
         moves = [] # Stores the index of each possible move.
         zero_index = start.index(0) # Get index of blank tile.
 
-        print(zero_index)
-
         # Define legal moves based on the position of the blank space.
         for i in range(1,4):
             right = zero_index+i
@@ -47,8 +45,8 @@ class SlidingTiles():
             if left >= 0:
                 moves.append(left)
 
-        print(moves)
         return moves
+
 
     '''
     Generates moves based on the rules of the sliding tiles game.
@@ -57,17 +55,17 @@ class SlidingTiles():
     def gen_moves(self, start):
         moves = self.find_moves(start) # Find the moves and store in a list.
         children = []
+        move = start
 
         # Find the index of blank space.
         zero_index = start.index(0)
 
-        for i in moves: # Generate all children with 0 tile swap.
+        for i in range(len(moves)): # Generate all children with 0 tile swap.
             # Assign the start state to the current move.
             move = start
-
             # Swap the 0 tile with the ith tile.
-            move[zero_index], move[i] = move[i], move[zero_index]
-
+            move[i], move[zero_index] = move[zero_index], move[i]
+            print(move)
             # Append each move state to the children list.
             children.append(move)
 
@@ -84,5 +82,4 @@ class SlidingTiles():
         return self.goals
 
 st = SlidingTiles()
-start = st.gen_start()
-print(st.gen_moves(start))
+print(st.gen_moves(st.gen_start()))

@@ -10,7 +10,7 @@ cannibal/missionary.
 import random
 
 class Game:
-    start, goal = []
+    start, goals = []
 
     def __init__(self, start, goal):
         if type(start) is []:
@@ -18,6 +18,7 @@ class Game:
         else:
             print('Game requires start state to be a list.')
             exit(1)
+
         if type(goal) is []:
             self.goal = goal
         else:
